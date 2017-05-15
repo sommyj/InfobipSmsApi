@@ -1,0 +1,11 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[user]
+	name = somto
+	email = somto@parrot
+[remote "heroku"]
+	url = https://git.heroku.com/hardexsmsapi.git
+	fetch = +refs/heads/*:refs/remotes/heroku/*

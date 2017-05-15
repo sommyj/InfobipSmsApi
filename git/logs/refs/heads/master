@@ -1,0 +1,2 @@
+0000000000000000000000000000000000000000 57406c004e41ee9dbc509f1a64e194cf63f36be3 somto <somto@parrot> 1494806566 +0100	commit (initial): 
+57406c004e41ee9dbc509f1a64e194cf63f36be3 43a8f0ed5ab1916f5e2e3e5bd5a540182d59482a somto <somto@parrot> 1494807636 +0100	commit: Add comments param to Consume & Controller class
