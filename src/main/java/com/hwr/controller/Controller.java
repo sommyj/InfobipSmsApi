@@ -76,7 +76,7 @@ public class Controller {
      * For more specific info see Consume class in com.hwr.consumption package
      * @param from
      * @param to
-     * @param bulkIds
+     * @param bulkId
      * @param auth
      * @param accept
      * @return 
@@ -84,11 +84,11 @@ public class Controller {
     @RequestMapping("smsLogs")
     public SMSLogsResponse getSMSLogsResponse(@RequestParam(value="from", defaultValue="") String from,
                                               @RequestParam(value="to", defaultValue="") String to,
-                                              @RequestParam(value="bulkIds", defaultValue="") String bulkIds,
+                                              @RequestParam(value="bulkId", defaultValue="") String bulkId,
                                               @RequestHeader(value="Authorization") String auth,
                                               @RequestHeader(value="accept") String accept){
         if(from != null && to != null){return consume.getSmsLogsFrom(from, to, auth, accept);}
-        if(bulkIds != null){return consume.getSmsLogsBulkIds(bulkIds, auth, accept);}
+        if(bulkId != null){return consume.getSmsLogsBulkIds(bulkId, auth, accept);}
        return consume.getSmsLogs(auth, accept);
     }
         

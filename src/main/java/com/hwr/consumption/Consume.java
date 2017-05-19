@@ -186,13 +186,13 @@ public class Consume {
      * @param accept
      * @return 
      */
-    public SMSLogsResponse getSmsLogsBulkIds(String bulkIds, String auth, String accept){
+    public SMSLogsResponse getSmsLogsBulkIds(String bulkId, String auth, String accept){
         headers.add("Authorization", auth);
         headers.add("Content-Type", accept);
         headers.add("accept", "application/json");
         HttpEntity entity = new HttpEntity(headers);
         SMSLogsResponse smsLogsResponse= new SMSLogsResponse();
-        ResponseEntity <SMSLogsResponse> response= restTemplate.exchange("https://api.infobip.com/sms/1/logs"+"?bulkId="+bulkIds, HttpMethod.GET, entity, SMSLogsResponse.class); 
+        ResponseEntity <SMSLogsResponse> response= restTemplate.exchange("https://api.infobip.com/sms/1/logs"+"?bulkId="+bulkId, HttpMethod.GET, entity, SMSLogsResponse.class); 
       smsLogsResponse= response.getBody();
         System.out.print(smsLogsResponse.toString());
         return smsLogsResponse;
