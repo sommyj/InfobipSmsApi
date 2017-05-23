@@ -10,7 +10,7 @@ package com.hwr.model.request;
  * @author somto
  */
 public class SendMessage {
-      private String from;
+    private String from;
     private String[] to;
     private String text;
 

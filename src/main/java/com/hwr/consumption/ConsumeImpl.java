@@ -9,6 +9,7 @@ import com.hwr.model.request.SendMessage;
 import com.hwr.model.response.delivery.SMSReportResponse;
 import com.hwr.model.response.send.SMSResponse;
 import com.hwr.model.response.smslogs.SMSLogsResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -20,12 +21,16 @@ import org.springframework.web.client.RestTemplate;
  * @author somto
  */
 public class ConsumeImpl implements Consume{
-    RestTemplate restTemplate= new RestTemplate();
-    
-    HttpHeaders headers = new HttpHeaders();
+    private final RestTemplate restTemplate;
+    private final HttpHeaders headers;
     
 ////    String string ="DFLTD:Test12345";
 ////    Base64 encoded string: REZMVEQ6IFRlc3QxMjM0NQ==;
+    @Autowired
+    public ConsumeImpl() {
+        this.headers = new HttpHeaders();
+        this.restTemplate = new RestTemplate();
+    }
     
     
     /**

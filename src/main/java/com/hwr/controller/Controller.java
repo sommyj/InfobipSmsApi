@@ -27,8 +27,8 @@ import com.hwr.consumption.Consume;
 @RestController
 public class Controller {
    
-   ConsumeImpl consume;
-   Consume consume1;
+   private final ConsumeImpl consume;
+   private final Consume consume1;
    
    @Autowired
     public Controller() {
