@@ -172,7 +172,8 @@ public class ConsumeImpl implements Consume{
         headers.add("accept", "application/json");
         HttpEntity entity = new HttpEntity(headers);
         SMSLogsResponse smsLogsResponse= new SMSLogsResponse();
-        ResponseEntity <SMSLogsResponse> response= restTemplate.exchange("https://api.infobip.com/sms/1/logs"+"?from="+from+"&to="+to+"&limit=1", HttpMethod.GET, entity, SMSLogsResponse.class); 
+        String too= to.substring(0,1).equals("+") ? to.substring(1, to.length()) : to;
+        ResponseEntity <SMSLogsResponse> response= restTemplate.exchange("https://api.infobip.com/sms/1/logs"+"?from="+from+"&to="+too+"&limit=1", HttpMethod.GET, entity, SMSLogsResponse.class); 
        smsLogsResponse= response.getBody();
         System.out.print(smsLogsResponse.toString());
         return smsLogsResponse;
