@@ -5,11 +5,12 @@
  */
 package com.hwr.controller;
 
-import com.hwr.consumption.Consume;
+import com.hwr.consumption.ConsumeImpl;
 import com.hwr.model.request.SendMessage;
 import com.hwr.model.response.delivery.SMSReportResponse;
 import com.hwr.model.response.send.SMSResponse;
 import com.hwr.model.response.smslogs.SMSLogsResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.hwr.consumption.Consume;
 
 /**
  *
@@ -25,7 +27,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class Controller {
    
-   Consume consume= new Consume();
+   ConsumeImpl consume;
+   Consume consume1;
+   
+   @Autowired
+    public Controller() {
+        this.consume = new ConsumeImpl();
+        this.consume1 = new ConsumeImpl();
+    }
      
     /**
      * Single textual message to one or multiple destinations
@@ -41,9 +50,9 @@ public class Controller {
      */
     @RequestMapping("sendMessage")
     public SMSResponse getSMSResponse(@RequestBody SendMessage sendMessage, @RequestHeader(value="Authorization") String auth,
-                                                                            @RequestHeader(value="Content-Type") String ContentType,
+                                                                            @RequestHeader(value="content-Type") String contentType,
                                                                             @RequestHeader(value="accept") String accept){
-        return consume.sendMessage(sendMessage, auth, ContentType, accept);
+        return consume1.sendMessage(sendMessage, auth, contentType, accept);
     }
     
     /**
@@ -73,7 +82,7 @@ public class Controller {
     /**
      * Getting logs without any query parameter or by from,to and bulkIds
      * This request will return logs from last 48h by default.
-     * For more specific info see Consume class in com.hwr.consumption package
+     * For more specific info see ConsumeImpl class in com.hwr.consumption package
      * @param from
      * @param to
      * @param bulkIds

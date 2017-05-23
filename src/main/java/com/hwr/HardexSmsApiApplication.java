@@ -1,6 +1,6 @@
 package com.hwr;
 
-import com.hwr.consumption.Consume;
+import com.hwr.consumption.ConsumeImpl;
 import com.hwr.model.request.SendMessage;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
