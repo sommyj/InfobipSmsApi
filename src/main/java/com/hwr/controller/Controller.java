@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.hwr.controller;
 
 import com.hwr.consumption.ConsumeImpl;
@@ -21,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hwr.consumption.Consume;
 
 /**
- *
+ * This utility class deals with the sending of a POST and GET request to web serve through Consume Interface and ConsumeImpl class.
  * @author somto
  */
 @RestController
@@ -37,11 +32,12 @@ public class Controller {
     }
      
     /**
+     * This is a POST method that passes parameters to the method in the Consume Interface
      * Single textual message to one or multiple destinations
-     * Long SMS:Maximum length for one message is 160 characters for GSM7 standard 
-     * or 70 characters Unicode encoded messages. 
+     * Long SMS:Maximum length for one message is 160 characters for GSM7 standard or 70 characters Unicode encoded messages
      * If you send text which exceeds the maximum number of supported characters for one message, 
-     * the sent message will be segmented and charged accordingly. One Long SMS that consists of two SMS counts as two SMS.
+     * the sent message will be segmented and charged accordingly
+     * One Long SMS that consists of two SMS counts as two SMS
      * @param sendMessage
      * @param auth
      * @param ContentType
@@ -56,9 +52,9 @@ public class Controller {
     }
     
     /**
+     * This is a GET method that passes parameters to the method in the ConsumeImpl class
      * Getting the delivery reports without any query parameter or by limit, messageId or bulkId
-     * Delivery report will be returned only once!
-     * Delivery reports are returned only once. 
+     * Delivery reports are returned only once, Additional delivery report request will return empty collection
      * @param limit
      * @param messageId
      * @param bulkId
@@ -80,12 +76,15 @@ public class Controller {
     } 
     
     /**
-     * Getting logs without any query parameter or by from,to and bulkIds
-     * This request will return logs from last 48h by default.
-     * For more specific info see ConsumeImpl class in com.hwr.consumption package
+     * This is a GET method that passes parameters to the method in the ConsumeImpl class
+     * Getting logs without any query parameter or by from,to, date, status and bulkIds
+     * This request will return logs from last 48h by default
+     * For more specific info see ConsumeImpl class in com.hwr.consumption package.
      * @param from
      * @param to
      * @param bulkIds
+     * @param date
+     * @param status
      * @param auth
      * @param accept
      * @return 
@@ -94,10 +93,13 @@ public class Controller {
     public SMSLogsResponse getSMSLogsResponse(@RequestParam(value="from", defaultValue="") String from,
                                               @RequestParam(value="to", defaultValue="") String to,
                                               @RequestParam(value="bulkIds", defaultValue="") String bulkIds,
+                                              @RequestParam(value="date", defaultValue="") String date,
+                                              @RequestParam(value="status", defaultValue="") String status,
                                               @RequestHeader(value="Authorization") String auth,
                                               @RequestHeader(value="accept") String accept){
         if(from != null && to != null){return consume.getSmsLogsFrom(from, to, auth, accept);}
         if(bulkIds != null){return consume.getSmsLogsBulkIds(bulkIds, auth, accept);}
+        if(date != null && status!= null){return consume.getSmsLogsDate(date, status, auth, accept);}
        return consume.getSmsLogs(auth, accept);
     }
         

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.hwr.consumption;
 
 import com.hwr.model.request.SendMessage;
@@ -17,7 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 /**
- *
+ * Implementation of Consume
+ * Sends and receives JSON objects from the Consume platform
+ * This utility class provides an abstraction layer for sending json
+ * POST and GET requests to a web server
  * @author somto
  */
 public class ConsumeImpl implements Consume{
@@ -36,12 +34,13 @@ public class ConsumeImpl implements Consume{
     /**
      * Single textual message to one or multiple destinations
      * Long SMS:Maximum length for one message is 160 characters for GSM7 standard 
-     * or 70 characters Unicode encoded messages. 
+     * or 70 characters Unicode encoded messages
      * If you send text which exceeds the maximum number of supported characters for one message, 
-     * the sent message will be segmented and charged accordingly. One Long SMS that consists of two SMS counts as two SMS.
+     * the sent message will be segmented and charged accordingly
+     * One Long SMS that consists of two SMS counts as two SMS.
      * @param sendMessage
      * @param auth
-     * @param ContentType
+     * @param contentType
      * @param accept
      * @return 
      */
@@ -62,8 +61,6 @@ public class ConsumeImpl implements Consume{
     /**
      * Getting delivery reports from Controller class without any query parameter
      * Delivery report will be returned only once!
-     * Delivery reports are returned only once. 
-     * Additional delivery report request will return empty collection.
      * @param auth
      * @param accept
      * @return 
@@ -82,11 +79,9 @@ public class ConsumeImpl implements Consume{
    /**
     * Getting the initial stated delivery reports from Controller class
     * Delivery report will be returned only once!
-    * Delivery reports are returned only once. 
-    * Additional delivery report request will return empty collection.
     * @param limit
-     * @param auth
-     * @param accept
+    * @param auth
+    * @param accept
     * @return 
     */ 
     public SMSReportResponse getDeliveryReportRange(String limit, String auth, String accept){
@@ -104,8 +99,6 @@ public class ConsumeImpl implements Consume{
     /**
      * Getting the stated messageId delivery reports from Controller class
      * Delivery report will be returned only once!
-     * Delivery reports are returned only once. 
-     * Additional delivery report request will return empty collection.
      * @param messageId
      * @param auth
      * @param accept
@@ -125,8 +118,6 @@ public class ConsumeImpl implements Consume{
     /**
      * Getting the stated bulkId delivery reports from Controller class
      * Delivery report will be returned only once!
-     * Delivery reports are returned only once. 
-     * Additional delivery report request will return empty collection.
      * @param bulkId
      * @param auth
      * @param accept
@@ -199,6 +190,27 @@ public class ConsumeImpl implements Consume{
         HttpEntity entity = new HttpEntity(headers);
         SMSLogsResponse smsLogsResponse= new SMSLogsResponse();
         ResponseEntity <SMSLogsResponse> response= restTemplate.exchange("https://api.infobip.com/sms/1/logs"+"?bulkId="+bulkIds, HttpMethod.GET, entity, SMSLogsResponse.class); 
+      smsLogsResponse= response.getBody();
+        System.out.print(smsLogsResponse.toString());
+        return smsLogsResponse;
+    }
+    
+    /**
+     * Getting logs with date range and general status as filters
+     * This request will return messages with status that matches the generalStatus parameter, which are sent between sentSince and current time
+     * @param date
+     * @param status
+     * @param auth
+     * @param accept
+     * @return 
+     */
+    public SMSLogsResponse getSmsLogsDate(String date, String status, String auth, String accept){
+        headers.add("Authorization", auth);
+        headers.add("Content-Type", accept);
+        headers.add("accept", "application/json");
+        HttpEntity entity = new HttpEntity(headers);
+        SMSLogsResponse smsLogsResponse= new SMSLogsResponse();
+        ResponseEntity <SMSLogsResponse> response= restTemplate.exchange("https://api.infobip.com/sms/1/logs"+"?sentSince="+date+"&generalStatus="+status, HttpMethod.GET, entity, SMSLogsResponse.class); 
       smsLogsResponse= response.getBody();
         System.out.print(smsLogsResponse.toString());
         return smsLogsResponse;
